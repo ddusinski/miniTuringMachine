@@ -14,6 +14,13 @@ public class TuringMachineStateAction {
         this.nextStateNumber = go;
     }
 
+    public TuringMachineStateAction(char tape) {
+        this.tapeSymbol=tape;
+        this.writeSymbol = '0';
+        this.moveDirection = '0';
+        this.nextStateNumber = 0;
+    }
+
     public char getMoveDirection() {
         return moveDirection;
     }

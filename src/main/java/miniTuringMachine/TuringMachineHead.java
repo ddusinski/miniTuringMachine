@@ -3,7 +3,6 @@ package miniTuringMachine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Scanner;
 
 public class TuringMachineHead {
     private TuringMachineStatesList statesList;
@@ -11,7 +10,6 @@ public class TuringMachineHead {
     private TuringMachineState tempState;
 
     private static final Logger log = LoggerFactory.getLogger(TuringMachineHead.class);
-    private static final Scanner scanner = new Scanner(System.in);
 
 
     public TuringMachineHead(TuringMachineStatesList statesList, TuringMachineTape tape) {
@@ -20,21 +18,22 @@ public class TuringMachineHead {
         run();
     }
 
-    public void run() {
+    private void run() {
         setState(0);
         int operationNumber=0;
 
+        //log.info(this.tape.getTape() + "  "+this.statesList.getMaxStatesNumber());
+
         int tempStateNumber = this.tempState.getStateNumber();
 
-        while (tempStateNumber != 3) {
-
+        while (tempStateNumber != this.statesList.getMaxStatesNumber()) {
             computeState();
             tempStateNumber = this.tempState.getStateNumber();
             operationNumber++;
-            log.info(String.valueOf(operationNumber));
+            //log.info(this.tape.getTape() + " @ " +tempStateNumber+ " @" +operationNumber);
         }
 
-        log.info(this.tape.getTape());
+        //log.info(String.valueOf(operationNumber));
     }
 
     private void setState(int stateNumber) {
@@ -54,8 +53,6 @@ public class TuringMachineHead {
             this.tape.moveTapePrevious();
         }
         setState(tempStateAction.getNextStateNumber());
-
     }
-
 
 }

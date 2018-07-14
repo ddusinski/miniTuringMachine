@@ -1,29 +1,27 @@
 package miniTuringMachine;
 
-
 public class TuringMachineTape {
 
     private String tape;
     private int tapePosition;
 
-    public TuringMachineTape(int firstNumber, int secondNumber) {
-
-        this.tape = createTape(convertToUnarySystem(firstNumber),convertToUnarySystem(secondNumber));
-        this.tapePosition = 0;
-    }
-
     public void moveTapeNext() {
         this.tapePosition++;
-        // tape.charAt(tapePosition);
     }
 
     public void moveTapePrevious() {
         this.tapePosition--;
-        //return tape.charAt(tapePosition);
     }
 
-    public char readTape()
-    {
+    public char readTape() {
+        try {
+            return tape.charAt(tapePosition);
+        } catch (StringIndexOutOfBoundsException e) {
+            StringBuilder sb = new StringBuilder(this.tape);
+            sb.append("#");
+            this.tape = sb.toString();
+        }
+
         return tape.charAt(tapePosition);
     }
 
@@ -36,38 +34,61 @@ public class TuringMachineTape {
         return sb.toString();
     }
 
-    private String createTape(String firstInputUnaryNumber, String secondInputUnaryNumber)
-    {
+    private String createTape(int firstNumber, int secondNumber, String operation) {
+        this.tapePosition = 0;
+        String firstInputUnaryNumber = convertToUnarySystem(firstNumber);
+        String secondInputUnaryNumber = convertToUnarySystem(secondNumber);
         StringBuilder sb = new StringBuilder("#");
         sb.append(firstInputUnaryNumber);
-        sb.append("+");
+        sb.append(operation);
         sb.append(secondInputUnaryNumber);
         sb.append("#");
         return sb.toString();
+    }
+
+    public void createAdditionTape(int firstNumber, int secondNumber) {
+        this.tape = createTape(firstNumber, secondNumber, "+");
+    }
+
+    public void createSubtractionTape(int firstNumber, int secondNumber) {
+        this.tape = createTape(firstNumber, secondNumber, "-");
+    }
+
+    public void createMultiplicationTape(int firstNumber, int secondNumber) {
+        this.tape = createTape(firstNumber, secondNumber, "*");
+    }
+
+    public void createDivisionTape(int firstNumber, int secondNumber) {
+        if (firstNumber%secondNumber==0) {
+            this.tape = createTape(firstNumber, secondNumber, ":");
+        }
+        else throw new IllegalArgumentException("Input is not distributable");
     }
 
     public String getTape() {
         return tape;
     }
 
-    public int getDecimalTape()
-    {
+    public int getDecimalTape() {
         int result = 0;
+        short sign = 1;
         for (int i = 0; i < this.tape.length(); i++) {
-            if (this.tape.charAt(i)=='1') {
+            if (this.tape.charAt(i) == '1') {
                 result++;
             }
+            if (this.tape.charAt(i) == '-') {
+                sign = -1;
+            }
         }
-
-        return result;
+        return result * sign;
     }
-    public void writeOnTape(char newValue)
-    {
+
+    public void writeOnTape(char newValue) {
         StringBuilder sb = new StringBuilder(this.tape);
-
-        sb.setCharAt(this.tapePosition,newValue);
-        this.tape=sb.toString();
-
+        sb.setCharAt(this.tapePosition, newValue);
+        this.tape = sb.toString();
     }
 
 }
+
+

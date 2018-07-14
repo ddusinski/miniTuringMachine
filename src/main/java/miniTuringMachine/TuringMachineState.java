@@ -4,8 +4,7 @@ import java.util.HashMap;
 
 public class TuringMachineState {
     private int stateNumber;
-    public HashMap<Character, TuringMachineStateAction> turingMachineState;
-
+    private HashMap<Character, TuringMachineStateAction> turingMachineState;
     public TuringMachineState(int stateNumber, TuringMachineStateAction... stateAction) {
 
 
@@ -17,7 +16,6 @@ public class TuringMachineState {
             this.turingMachineState.put(i.getTapeSymbol(),i);
         }
     }
-
 
     public int getStateNumber() {
         return this.stateNumber;
