@@ -1,40 +1,28 @@
 package miniTuringMachine.machine.model;
 
 import miniTuringMachine.machine.states.StatesList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class Head {
-    private StatesList statesList;
-    private Tape tape;
+    private final StatesList statesList;
+    private final Tape tape;
     private State tempState;
-
-    private static final Logger log = LoggerFactory.getLogger(Head.class);
-
 
     public Head(StatesList statesList, Tape tape) {
         this.statesList = statesList;
         this.tape = tape;
-        run();
     }
 
-    private void run() {
+    public void run() {
         setState(0);
-        int operationNumber=0;
-
-        //log.info(this.tape.getTape() + "  "+this.statesList.getMaxStatesNumber());
-
+        int operationNumber = 0;
         int tempStateNumber = this.tempState.getStateNumber();
 
         while (tempStateNumber != this.statesList.getMaxStatesNumber()) {
             computeState();
             tempStateNumber = this.tempState.getStateNumber();
+            System.out.println(operationNumber + "  " + this.tape.getTape());
             operationNumber++;
-            //log.info(this.tape.getTape() + " @ " +tempStateNumber+ " @" +operationNumber);
         }
-
-        //log.info(String.valueOf(operationNumber));
     }
 
     private void setState(int stateNumber) {
@@ -53,7 +41,6 @@ public class Head {
         } else {
             this.tape.moveTapePrevious();
         }
-        System.out.println(this.tape.getTape());
         setState(tempStateAction.getNextStateNumber());
     }
 

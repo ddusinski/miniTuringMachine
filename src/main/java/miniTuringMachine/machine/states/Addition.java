@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Addition implements StatesList {
 
-    private ArrayList<State> statesList;
+    private final ArrayList<State> statesList;
 
     public Addition() {
 
