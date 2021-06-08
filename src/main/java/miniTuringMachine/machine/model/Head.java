@@ -1,18 +1,19 @@
-package miniTuringMachine;
+package miniTuringMachine.machine.model;
 
+import miniTuringMachine.machine.states.StatesList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class TuringMachineHead {
-    private TuringMachineStatesList statesList;
-    private TuringMachineTape tape;
-    private TuringMachineState tempState;
+public class Head {
+    private StatesList statesList;
+    private Tape tape;
+    private State tempState;
 
-    private static final Logger log = LoggerFactory.getLogger(TuringMachineHead.class);
+    private static final Logger log = LoggerFactory.getLogger(Head.class);
 
 
-    public TuringMachineHead(TuringMachineStatesList statesList, TuringMachineTape tape) {
+    public Head(StatesList statesList, Tape tape) {
         this.statesList = statesList;
         this.tape = tape;
         run();
@@ -40,18 +41,19 @@ public class TuringMachineHead {
         this.tempState = statesList.getState(stateNumber);
     }
 
-    private TuringMachineStateAction getStateAction(char tapeChar) {
+    private StateAction getStateAction(char tapeChar) {
         return this.tempState.getStateAction(tapeChar);
     }
 
     private void computeState() {
-        TuringMachineStateAction tempStateAction = getStateAction(this.tape.readTape());
+        StateAction tempStateAction = getStateAction(this.tape.readTape());
         this.tape.writeOnTape(tempStateAction.getWriteSymbol());
         if (tempStateAction.getMoveDirection() == 'R') {
             this.tape.moveTapeNext();
         } else {
             this.tape.moveTapePrevious();
         }
+        System.out.println(this.tape.getTape());
         setState(tempStateAction.getNextStateNumber());
     }
 

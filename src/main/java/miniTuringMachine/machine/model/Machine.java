@@ -1,17 +1,18 @@
-package miniTuringMachine;
+package miniTuringMachine.machine.model;
 
+import miniTuringMachine.machine.states.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Scanner;
 
-public class miniTuringMachine extends Thread {
+public class Machine extends Thread {
 
-    private static final Logger log = LoggerFactory.getLogger(miniTuringMachine.class);
+    private static final Logger log = LoggerFactory.getLogger(Machine.class);
     private static final Scanner scanner = new Scanner(System.in);
 
-    private TuringMachineTape turingMachineTape;
-    private TuringMachineStatesList statesList;
-    private TuringMachineHead head;
+    private Tape tape;
+    private StatesList statesList;
+    private Head head;
     private int firstInputNumber;
     private int secondInputNumber;
     private char machineOperation;
@@ -19,32 +20,32 @@ public class miniTuringMachine extends Thread {
 
     private Thread turingMachineThread;
 
-    public miniTuringMachine(int firstNumber, int secondNumber, char operation) {
+    public Machine(int firstNumber, int secondNumber, char operation) {
         this.firstInputNumber = firstNumber;
         this.secondInputNumber = secondNumber;
         this.machineOperation = operation;
-        this.turingMachineTape = new TuringMachineTape();
+        this.tape = new Tape();
 
     }
 
     private void calculateAddition() {
-        this.turingMachineTape.createAdditionTape(this.firstInputNumber, this.secondInputNumber);
-        this.statesList = new TuringMachineStatesListAddition();
+        this.tape.createAdditionTape(this.firstInputNumber, this.secondInputNumber);
+        this.statesList = new Addition();
     }
 
     private void calculateSubtraction() {
-        this.turingMachineTape.createSubtractionTape(this.firstInputNumber, this.secondInputNumber);
-        this.statesList = new TuringMachineStatesListSubtraction();
+        this.tape.createSubtractionTape(this.firstInputNumber, this.secondInputNumber);
+        this.statesList = new Subtraction();
     }
 
     private void calculateMultiplication() {
-        this.turingMachineTape.createMultiplicationTape(this.firstInputNumber, this.secondInputNumber);
-        this.statesList = new TuringMachineStatesListMultiplication();
+        this.tape.createMultiplicationTape(this.firstInputNumber, this.secondInputNumber);
+        this.statesList = new Multiplication();
     }
 
     private void calculateDivision() {
-        this.turingMachineTape.createDivisionTape(this.firstInputNumber, this.secondInputNumber);
-        this.statesList = new TuringMachineStatesListDivision();
+        this.tape.createDivisionTape(this.firstInputNumber, this.secondInputNumber);
+        this.statesList = new Division();
     }
 
     public void run() {
@@ -65,7 +66,7 @@ public class miniTuringMachine extends Thread {
                 break;
         }
 
-        this.head = new TuringMachineHead(this.statesList, this.turingMachineTape);
+        this.head = new Head(this.statesList, this.tape);
         this.liveTime = System.nanoTime() - startTime;
         showResult();
     }
@@ -73,7 +74,7 @@ public class miniTuringMachine extends Thread {
     private void showResult() {
         //"The Result Tape: "+ this.turingMachineTape.getTape() +
         log.info("Operation: " + String.valueOf(machineOperation) +
-                " Decimal:" + String.valueOf(this.turingMachineTape.getDecimalTape()) +
+                " Decimal:" + String.valueOf(this.tape.getDecimalTape()) +
                 " Live time of thread: " + String.valueOf((this.liveTime) / 1000)
         );
 

@@ -1,6 +1,6 @@
-package miniTuringMachine;
+package miniTuringMachine.machine.model;
 
-public class TuringMachineTape {
+public class Tape {
 
     private String tape;
     private int tapePosition;

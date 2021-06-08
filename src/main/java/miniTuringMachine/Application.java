@@ -1,19 +1,21 @@
 package miniTuringMachine;
 
+import miniTuringMachine.machine.model.Machine;
+
 public class Application {
 
     public static void main(String[] args) {
 
         UserInterface ui = new UserInterface();
-        miniTuringMachine mtmA = new miniTuringMachine(ui.getFirstInputNumber(), ui.getSecondInputNumber(), '+');
-        miniTuringMachine mtmS = new miniTuringMachine(ui.getFirstInputNumber(), ui.getSecondInputNumber(), '-');
-        miniTuringMachine mtmM = new miniTuringMachine(ui.getFirstInputNumber(), ui.getSecondInputNumber(), '*');
-        miniTuringMachine mtmD = new miniTuringMachine(ui.getFirstInputNumber(), ui.getSecondInputNumber(), ':');
+        Machine mtmA = new Machine(ui.getFirstInputNumber(), ui.getSecondInputNumber(), '+');
+        Machine mtmS = new Machine(ui.getFirstInputNumber(), ui.getSecondInputNumber(), '-');
+        Machine mtmM = new Machine(ui.getFirstInputNumber(), ui.getSecondInputNumber(), '*');
+        Machine mtmD = new Machine(ui.getFirstInputNumber(), ui.getSecondInputNumber(), ':');
 
         mtmA.start();
-        mtmS.start();
-        mtmM.start();
-        mtmD.start();
+//        mtmS.start();
+//        mtmM.start();
+//        mtmD.start();
 /*
         try {
 
